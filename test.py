@@ -15,7 +15,7 @@ if st.button("건강 체크하기"):
     if symptom == "":
         st.warning("❗ 증상을 입력해주세요.")
     else:
-        symptom_lower = symptom.lower()  # 대소문자 구분 제거
+        symptom_lower = symptom.lower()
         if "기침" in symptom_lower or "발열" in symptom_lower:
             st.error("호흡기 관련 증상이 의심됩니다.")
             st.write("- 충분한 수분 섭취와 휴식을 취하세요.")
@@ -48,6 +48,14 @@ if st.button("건강 체크하기"):
             st.info("생리와 관련된 통증일 수 있습니다.")
             st.write("- 따뜻한 찜질과 휴식을 권장합니다.")
             st.write("- 통증이 심하면 진통제 복용 또는 산부인과 상담을 고려하세요.")
+        elif "눈에 이물질" in symptom_lower:
+            st.warning("눈 관련 증상일 수 있습니다.")
+            st.write("- 흐르는 물로 눈을 충분히 씻어주세요.")
+            st.write("- 증상이 지속되거나 통증이 심하면 안과 진료를 권장합니다.")
+        elif "칼에 찔림" in symptom_lower or "손가락 잘림" in symptom_lower:
+            st.error("출혈 가능성이 있는 상처입니다.")
+            st.write("- 출혈이 멈출 때까지 압박하세요.")
+            st.write("- 소독 후 연고와 거즈를 덮고 필요 시 병원 방문을 권장합니다.")
         else:
             st.write("해당 증상은 자가 체크 항목에는 없어요.")
             st.write("✅ 증상이 계속된다면 가까운 의료기관을 방문하세요.")
@@ -64,7 +72,8 @@ if uploaded_file is not None:
     st.image(image, caption="업로드된 상처 사진", use_column_width=True)
 
     st.subheader("상처 유형을 선택하세요")
-    wound_type = st.selectbox("상처 유형", ["찰과상(까진 상처)", "절상(칼/날카로운 것에 베인 상처)", "화상", "기타"])
+    wound_type = st.selectbox("상처 유형", ["찰과상(까진 상처)", "절상(칼/날카로운 것에 베인 상처)", 
+                                             "화상", "눈 이물질", "손가락 찔림/절상", "기타"])
 
     if wound_type == "찰과상(까진 상처)":
         st.success("👉 처치법: 깨끗한 물로 세척 후, 연고를 바르고 밴드를 붙입니다.")
@@ -72,6 +81,10 @@ if uploaded_file is not None:
         st.success("👉 처치법: 출혈이 멈출 때까지 압박 후, 소독약 처리 후 연고와 거즈를 덮습니다.")
     elif wound_type == "화상":
         st.success("👉 처치법: 흐르는 시원한 물에 10~15분 이상 식힌 후, 화상 전용 연고를 바릅니다.")
+    elif wound_type == "눈 이물질":
+        st.success("👉 처치법: 흐르는 깨끗한 물로 눈을 충분히 씻고, 통증 지속 시 안과 방문.")
+    elif wound_type == "손가락 찔림/절상":
+        st.success("👉 처치법: 출혈이 멈출 때까지 압박 후, 소독약 처리 후 연고와 거즈 덮기, 필요시 병원 방문.")
     else:
         st.info("👉 처치법: 상처 종류에 따라 다르니, 가까운 약국이나 병원을 방문하세요.")
 
